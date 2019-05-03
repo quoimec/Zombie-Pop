@@ -15,6 +15,7 @@ class GameController: UIViewController {
 	let maxZombies = 15
 	let gameSeconds = 60
 	var gameTimer = Timer()
+	var zombieObject = Zombie(passedSpawn: CGPoint(x: 60, y: 0))
 	
 	init() {
 		super.init(nibName: nil, bundle: nil)
@@ -23,9 +24,8 @@ class GameController: UIViewController {
 	override func viewDidLoad() {
 	
 		self.view.backgroundColor = UIColor.red
-		gameTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(outputHello), userInfo: nil, repeats: false)
+		gameTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(outputHello), userInfo: nil, repeats: false)
 		
-	
 	}
 	
 	required init?(coder aDecoder: NSCoder) {
@@ -39,13 +39,26 @@ extension GameController {
 	func spawnZombie() {
 	
 		let zombieView = UIView(frame: CGRect(x: 60, y: 0, width: 40, height: 40))
+		zombieView.tag = 1
 		zombieView.backgroundColor = UIColor.blue
 		
-		self.view.addSubview(zombieView)
-		
-		UIView.animate(withDuration: 5.0, animations: {
+		let zombieAnimator = UIViewPropertyAnimator(duration: 5.0, curve: .easeInOut, animations: {
 			zombieView.frame.origin.y = UIScreen.main.bounds.height - 40
 		})
+		
+		zombieAnimator.addCompletion({ animatingPosition in
+			
+			print(zombieView.frame)
+			
+		})
+		
+		zombieView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(killZombie(sender:))))
+		
+		zombieObject.zombieWillSpawn(passedView: zombieView, passedAnimator: zombieAnimator)
+		
+		self.view.addSubview(zombieView)
+	
+		zombieAnimator.startAnimation()
 	
 	}
 
@@ -54,6 +67,14 @@ extension GameController {
 	@objc func outputHello() {
 	
 		spawnZombie()
+	
+	}
+	
+	@objc func killZombie(sender: UIGestureRecognizer) {
+	
+		print("KILL")
+		
+		zombieObject.zombieView?.removeFromSuperview()
 	
 	}
 
