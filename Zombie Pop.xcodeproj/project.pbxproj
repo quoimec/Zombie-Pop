@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		CB539C02227C23E200091078 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB539C01227C23E200091078 /* AppDelegate.swift */; };
-		CB539C04227C23E200091078 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB539C03227C23E200091078 /* ViewController.swift */; };
-		CB539C07227C23E200091078 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB539C05227C23E200091078 /* Main.storyboard */; };
 		CB539C09227C23E700091078 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB539C08227C23E700091078 /* Assets.xcassets */; };
 		CB539C0C227C23E700091078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB539C0A227C23E700091078 /* LaunchScreen.storyboard */; };
 		CB539C15227C241C00091078 /* ZombieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB539C14227C241C00091078 /* ZombieModel.swift */; };
@@ -19,8 +17,6 @@
 /* Begin PBXFileReference section */
 		CB539BFE227C23E200091078 /* Zombie Pop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Zombie Pop.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB539C01227C23E200091078 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CB539C03227C23E200091078 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		CB539C06227C23E200091078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB539C08227C23E700091078 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB539C0B227C23E700091078 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB539C0D227C23E700091078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +35,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB243309227C63770072042B /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CB539C16227C280900091078 /* GameController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		CB539BF5227C23E200091078 = {
 			isa = PBXGroup;
 			children = (
@@ -58,14 +62,12 @@
 		CB539C00227C23E200091078 /* Zombie Pop */ = {
 			isa = PBXGroup;
 			children = (
+				CB243309227C63770072042B /* Controllers */,
 				CB539C13227C23F500091078 /* Models */,
 				CB539C01227C23E200091078 /* AppDelegate.swift */,
-				CB539C03227C23E200091078 /* ViewController.swift */,
-				CB539C05227C23E200091078 /* Main.storyboard */,
 				CB539C08227C23E700091078 /* Assets.xcassets */,
 				CB539C0A227C23E700091078 /* LaunchScreen.storyboard */,
 				CB539C0D227C23E700091078 /* Info.plist */,
-				CB539C16227C280900091078 /* GameController.swift */,
 			);
 			path = "Zombie Pop";
 			sourceTree = "<group>";
@@ -138,7 +140,6 @@
 			files = (
 				CB539C0C227C23E700091078 /* LaunchScreen.storyboard in Resources */,
 				CB539C09227C23E700091078 /* Assets.xcassets in Resources */,
-				CB539C07227C23E200091078 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,7 +150,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB539C04227C23E200091078 /* ViewController.swift in Sources */,
 				CB539C17227C280900091078 /* GameController.swift in Sources */,
 				CB539C02227C23E200091078 /* AppDelegate.swift in Sources */,
 				CB539C15227C241C00091078 /* ZombieModel.swift in Sources */,
@@ -159,14 +159,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		CB539C05227C23E200091078 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CB539C06227C23E200091078 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		CB539C0A227C23E700091078 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
