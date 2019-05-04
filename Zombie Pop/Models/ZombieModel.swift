@@ -19,11 +19,11 @@ struct Zombie {
 	let zombieIcon: String
 	let zombieSpeed: CGFloat
 	var zombieID: Int
-	var zombieView: UIView
+	var zombieView: UIImageView
 	var zombieAnimator: UIViewPropertyAnimator
 	
 
-	init(passedID: Int, passedView: UIView, passedAnimator: UIViewPropertyAnimator) {
+	init(passedID: Int, passedView: UIImageView, passedAnimator: UIViewPropertyAnimator) {
 	
 		let zombieDistribution = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4]
 		
@@ -35,14 +35,28 @@ struct Zombie {
 		switch self.zombieType {
 		
 			case .Red:
-			self.zombieIcon = "Red_Zombie"
+			self.zombieIcon = "Red Zombie"
 			self.zombieSpeed = 1.0
 			
-			default:
-			self.zombieIcon = "Default_Zombie"
-			self.zombieSpeed = 2.0
-		
+			case .Pink:
+			self.zombieIcon = "Pink Zombie"
+			self.zombieSpeed = 1.0
+			
+			case .Green:
+			self.zombieIcon = "Green Zombie"
+			self.zombieSpeed = 1.0
+			
+			case .Blue:
+			self.zombieIcon = "Blue Zombie"
+			self.zombieSpeed = 1.0
+			
+			case .Black:
+			self.zombieIcon = "Black Zombie"
+			self.zombieSpeed = 1.0
+			
 		}
+		
+		self.zombieView.image = UIImage(named: self.zombieIcon)
 		
 	}
 

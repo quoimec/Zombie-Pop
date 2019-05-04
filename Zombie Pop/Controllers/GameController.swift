@@ -84,9 +84,9 @@ extension GameController {
 			return nil
 		}
 	
-		let zombieView = UIView(frame: CGRect(x: zombieOrigin, y: 0, width: zombieSize, height: zombieSize))
+		let zombieView = UIImageView(frame: CGRect(x: zombieOrigin, y: 0, width: zombieSize, height: zombieSize))
+		zombieView.isUserInteractionEnabled = true
 		zombieView.tag = zombieID
-		zombieView.backgroundColor = UIColor.blue
 		
 		let zombieAnimator = UIViewPropertyAnimator(duration: 5.0, curve: .linear, animations: {
 			zombieView.frame.origin.y = UIScreen.main.bounds.height - 40
