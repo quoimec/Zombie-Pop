@@ -161,9 +161,7 @@ extension GameController {
 	
 	func despawnZombie(zombieID: Int) {
 	
-		guard let zombieIndex = zombieArray.firstIndex(where: { $0.zombieID == zombieID }) else {
-			return
-		}
+		guard let zombieIndex = zombieArray.firstIndex(where: { $0.zombieID == zombieID }) else { return }
 		
 		zombieArray[zombieIndex].zombieAnimator.stopAnimation(true)
 		zombieArray[zombieIndex].zombieView.removeFromSuperview()
@@ -189,6 +187,10 @@ extension GameController {
 	@objc func killZombie(sender: UIGestureRecognizer) {
 	
 		guard let zombieView = sender.view else { return }
+	
+		guard let zombieObject = zombieArray.first(where: { $0.zombieID == zombieView.tag }) else { return }
+	
+		
 	
 		despawnZombie(zombieID: zombieView.tag)
 	
