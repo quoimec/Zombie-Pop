@@ -18,18 +18,19 @@ struct Zombie {
 	let zombieType: ZombieType
 	let zombieIcon: String
 	let zombieSpeed: CGFloat
-	var zombieSpawn: CGPoint
-	
-	var zombieView: UIView?
-	var zombieAnimator: UIViewPropertyAnimator?
+	var zombieID: Int
+	var zombieView: UIView
+	var zombieAnimator: UIViewPropertyAnimator
 	
 
-	init(passedSpawn: CGPoint) {
+	init(passedID: Int, passedView: UIView, passedAnimator: UIViewPropertyAnimator) {
 	
 		let zombieDistribution = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4]
 		
 		self.zombieType = ZombieType.init(rawValue: zombieDistribution[Int.random(in: 0 ..< zombieDistribution.count)])!
-		self.zombieSpawn = passedSpawn
+		self.zombieID = passedID
+		self.zombieView = passedView
+		self.zombieAnimator = passedAnimator
 		
 		switch self.zombieType {
 		
@@ -45,9 +46,9 @@ struct Zombie {
 		
 	}
 
-	mutating func zombieWillSpawn(passedView: UIView, passedAnimator: UIViewPropertyAnimator) {
-		self.zombieView = passedView
-		self.zombieAnimator = passedAnimator
-	}
+	
+//	func timeRemaining() {
+//		return zombieAnimator?.fractionComplete
+//	}
 
 }
