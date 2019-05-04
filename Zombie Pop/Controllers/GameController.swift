@@ -141,7 +141,5 @@ extension GameController {
 		despawnZombie(zombieID: zombieView.tag)
 	
 	}
-	
-	
 
 }
