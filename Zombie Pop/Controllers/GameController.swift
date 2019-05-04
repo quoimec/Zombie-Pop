@@ -13,19 +13,71 @@ import SpriteKit
 class GameController: UIViewController {
 
 	let maxZombies = 15
-	let gameSeconds = 60
-	var gameTimer = Timer()
+	var gameSeconds = 60
 	var zombieArray = Array<Zombie>()
 	var zombieIndex = 0
 	
+	var tickerTimer = Timer()
+	var gameTimer = Timer()
+	
+	let zombieLayer = UIView()
+	let nightLayer = NightView()
+	let infoLayer: InfoView
+	
 	init() {
+		infoLayer = InfoView(gameTime: self.gameSeconds)
 		super.init(nibName: nil, bundle: nil)
+	
 	}
 	
 	override func viewDidLoad() {
 	
-		self.view.backgroundColor = UIColor.red
-		gameTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(gameLoop), userInfo: nil, repeats: true)
+		self.view.backgroundColor = UIColor(red: 0.27, green: 0.42, blue: 0.30, alpha: 1.00)
+		
+		tickerTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(gameLoop), userInfo: nil, repeats: true)
+		
+		gameTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] timer in
+			
+			guard let safe = self else { return }
+			
+			safe.gameSeconds -= 1
+			safe.infoLayer.updateTimer(newTime: safe.gameSeconds)
+			
+			if safe.gameSeconds <= 0 {
+				safe.tickerTimer.invalidate()
+				safe.gameTimer.invalidate()
+			}
+			
+		})
+		
+		zombieLayer.translatesAutoresizingMaskIntoConstraints = false
+		nightLayer.translatesAutoresizingMaskIntoConstraints = false
+		infoLayer.translatesAutoresizingMaskIntoConstraints = false
+		
+		self.view.addSubview(zombieLayer)
+		self.view.addSubview(nightLayer)
+		self.view.addSubview(infoLayer)
+		
+		self.view.addConstraints([
+		
+			// Zombie Layer
+			NSLayoutConstraint(item: zombieLayer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: zombieLayer, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: self.view!, attribute: .trailing, relatedBy: .equal, toItem: zombieLayer, attribute: .trailing, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: self.view!, attribute: .bottom, relatedBy: .equal, toItem: zombieLayer, attribute: .bottom, multiplier: 1.0, constant: 0),
+		
+			// Night Layer
+			NSLayoutConstraint(item: nightLayer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: nightLayer, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: self.view!, attribute: .trailing, relatedBy: .equal, toItem: nightLayer, attribute: .trailing, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: self.view!, attribute: .bottom, relatedBy: .equal, toItem: nightLayer, attribute: .bottom, multiplier: 1.0, constant: 0),
+			
+			// Info Layer
+			NSLayoutConstraint(item: infoLayer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 20),
+			NSLayoutConstraint(item: infoLayer, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 40),
+			NSLayoutConstraint(item: self.view!, attribute: .trailing, relatedBy: .equal, toItem: infoLayer, attribute: .trailing, multiplier: 1.0, constant: 20)
+		
+		])
 		
 	}
 	
@@ -100,7 +152,7 @@ extension GameController {
 		
 		zombieView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(killZombie(sender:))))
 	
-		self.view.addSubview(zombieView)
+		zombieLayer.addSubview(zombieView)
 		zombieAnimator.startAnimation()
 		
 		return zombieObject
