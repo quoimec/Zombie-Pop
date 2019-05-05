@@ -15,6 +15,9 @@
 		CB551CA4227D745900AC1A69 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA2227D745900AC1A69 /* InfoView.swift */; };
 		CB551CA5227D745900AC1A69 /* NightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA3227D745900AC1A69 /* NightView.swift */; };
 		CB551CA7227D74F400AC1A69 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA6227D74F400AC1A69 /* ScoreModel.swift */; };
+		CB551CA9227EAD2C00AC1A69 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */; };
+		CB551CAB227EAD6E00AC1A69 /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAA227EAD6E00AC1A69 /* SliderView.swift */; };
+		CB551CAD227EB8B200AC1A69 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAC227EB8B200AC1A69 /* NavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +31,9 @@
 		CB551CA2227D745900AC1A69 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		CB551CA3227D745900AC1A69 /* NightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightView.swift; sourceTree = "<group>"; };
 		CB551CA6227D74F400AC1A69 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
+		CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
+		CB551CAA227EAD6E00AC1A69 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
+		CB551CAC227EB8B200AC1A69 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +51,8 @@
 			isa = PBXGroup;
 			children = (
 				CB539C16227C280900091078 /* GameController.swift */,
+				CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */,
+				CB551CAC227EB8B200AC1A69 /* NavigationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -93,6 +101,7 @@
 			children = (
 				CB551CA2227D745900AC1A69 /* InfoView.swift */,
 				CB551CA3227D745900AC1A69 /* NightView.swift */,
+				CB551CAA227EAD6E00AC1A69 /* SliderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,9 +176,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB551CAB227EAD6E00AC1A69 /* SliderView.swift in Sources */,
 				CB551CA4227D745900AC1A69 /* InfoView.swift in Sources */,
 				CB551CA5227D745900AC1A69 /* NightView.swift in Sources */,
 				CB539C17227C280900091078 /* GameController.swift in Sources */,
+				CB551CAD227EB8B200AC1A69 /* NavigationController.swift in Sources */,
+				CB551CA9227EAD2C00AC1A69 /* SettingsController.swift in Sources */,
 				CB539C02227C23E200091078 /* AppDelegate.swift in Sources */,
 				CB539C15227C241C00091078 /* ZombieModel.swift in Sources */,
 				CB551CA7227D74F400AC1A69 /* ScoreModel.swift in Sources */,

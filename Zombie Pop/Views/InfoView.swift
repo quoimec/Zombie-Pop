@@ -11,10 +11,10 @@ import UIKit
 
 class InfoView: UIView {
 
-	let infoTimer = UILabel(frame: CGRect.zero)
-	let infoScore = UILabel(frame: CGRect.zero)
-	let infoMulti = UILabel(frame: CGRect.zero)
-	let multiIcon = UIImageView(frame: CGRect.zero)
+	let infoTimer = UILabel()
+	let infoScore = UILabel()
+	let infoMulti = UILabel()
+	let multiIcon = UIImageView()
 	
 	init(gameTime: Int) {
 		super.init(frame: CGRect.zero)
