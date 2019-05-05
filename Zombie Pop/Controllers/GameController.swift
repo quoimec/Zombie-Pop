@@ -17,6 +17,8 @@ class GameController: UIViewController {
 	var zombieArray = Array<Zombie>()
 	var zombieIndex = 0
 	
+	var gameScore = ScoreModel()
+	
 	var tickerTimer = Timer()
 	var gameTimer = Timer()
 	
@@ -27,14 +29,13 @@ class GameController: UIViewController {
 	init() {
 		infoLayer = InfoView(gameTime: self.gameSeconds)
 		super.init(nibName: nil, bundle: nil)
-	
 	}
 	
 	override func viewDidLoad() {
 	
 		self.view.backgroundColor = UIColor(red: 0.27, green: 0.42, blue: 0.30, alpha: 1.00)
 		
-		tickerTimer = Timer.scheduledTimer(timeInterval: 0.25, target: self, selector: #selector(gameLoop), userInfo: nil, repeats: true)
+		tickerTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(gameLoop), userInfo: nil, repeats: true)
 		
 		gameTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] timer in
 			
@@ -99,16 +100,20 @@ extension GameController {
 		return Int(pow(Double.random(in: 0 ... 100), 2.0) * 0.0004 + 1.0)
 	}
 
-	func spawnLocation(zombieWidth: Int, zombieBorder: Int, edgeInset: Int) -> Int? {
+	func spawnLocation(zombieObject: Zombie, zombieBorder: Int, edgeInset: Int) -> Int? {
 		
-		let zombieInset = Int((Double(zombieWidth) / 2.0).rounded(FloatingPointRoundingRule.up)) + edgeInset
-		let zombieRadius = CGFloat((zombieWidth / 2) + zombieBorder)
+		let zombieRadius = CGFloat((zombieObject.zombieSize / 2) + zombieBorder)
+		let zombieInset = Int((Double(zombieObject.zombieSize) / 2.0).rounded(FloatingPointRoundingRule.up)) + edgeInset
 		
 		var completeSet: Set<Int> = Set(zombieInset ... Int(UIScreen.main.bounds.width) - zombieInset)
 		
 		for eachZombie in zombieArray {
 		
-			let zombieSet: Set<Int> = Set(Int(eachZombie.zombieView.frame.origin.x - zombieRadius) ... Int(eachZombie.zombieView.frame.origin.x + zombieRadius))
+			guard let zombieView = eachZombie.zombieView, let zombieAnimator = eachZombie.zombieAnimator else { continue }
+			
+			if (1.0 - Double(zombieAnimator.fractionComplete)) * (eachZombie.zombieTime * 1.1) < zombieObject.zombieTime { continue }
+			
+			let zombieSet: Set<Int> = Set(Int(zombieView.frame.origin.x - zombieRadius) ... Int(zombieView.frame.origin.x + zombieRadius))
 
 			completeSet = completeSet.subtracting(zombieSet)
 
@@ -130,27 +135,33 @@ extension GameController {
 
 	func spawnZombie(zombieID: Int) -> Zombie? {
 		
-		let zombieSize = 40
+		var zombieObject = Zombie(passedID: zombieID, speedScale: 0.5)
 		
-		guard let zombieOrigin = spawnLocation(zombieWidth: zombieSize, zombieBorder: 4, edgeInset: 10) else {
+		guard let zombieOrigin = spawnLocation(zombieObject: zombieObject, zombieBorder: 2, edgeInset: 10) else {
 			return nil
 		}
 	
-		let zombieView = UIImageView(frame: CGRect(x: zombieOrigin, y: 0, width: zombieSize, height: zombieSize))
+		let zombieView = UIImageView(frame: CGRect(x: zombieOrigin, y: 0, width: 50, height: 50))
 		zombieView.isUserInteractionEnabled = true
 		zombieView.tag = zombieID
 		
-		let zombieAnimator = UIViewPropertyAnimator(duration: 5.0, curve: .linear, animations: {
-			zombieView.frame.origin.y = UIScreen.main.bounds.height - 40
+		let zombieAnimator = UIViewPropertyAnimator(duration: zombieObject.zombieTime, curve: .linear, animations: {
+			zombieView.frame.origin.y = UIScreen.main.bounds.height
 		})
 		
 		zombieAnimator.addCompletion({ [weak self] animatingPosition in
-			self?.despawnZombie(zombieID: zombieID)
+			
+			guard let safe = self else { return }
+			
+			safe.gameScore.gameScore -= zombieObject.zombieScore
+			safe.infoLayer.updateScore(newScore: safe.gameScore.gameScore)
+			safe.despawnZombie(zombieID: zombieID)
+			
 		})
 		
-		let zombieObject = Zombie(passedID: zombieID, passedView: zombieView, passedAnimator: zombieAnimator)
-		
 		zombieView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(killZombie(sender:))))
+	
+		zombieObject.zombieWillAppear(passedView: zombieView, passedAnimator: zombieAnimator)
 	
 		zombieLayer.addSubview(zombieView)
 		zombieAnimator.startAnimation()
@@ -163,8 +174,8 @@ extension GameController {
 	
 		guard let zombieIndex = zombieArray.firstIndex(where: { $0.zombieID == zombieID }) else { return }
 		
-		zombieArray[zombieIndex].zombieAnimator.stopAnimation(true)
-		zombieArray[zombieIndex].zombieView.removeFromSuperview()
+		zombieArray[zombieIndex].zombieAnimator?.stopAnimation(true)
+		zombieArray[zombieIndex].zombieView?.removeFromSuperview()
 		zombieArray.remove(at: zombieIndex)
 	
 	}
@@ -189,8 +200,17 @@ extension GameController {
 		guard let zombieView = sender.view else { return }
 	
 		guard let zombieObject = zombieArray.first(where: { $0.zombieID == zombieView.tag }) else { return }
-	
 		
+		if let lastTapped = gameScore.lastTapped, lastTapped == zombieObject.zombieType {
+			gameScore.gameScore += Int(Double(zombieObject.zombieScore) * 1.5)
+		} else {
+			gameScore.gameScore += zombieObject.zombieScore
+		}
+		
+		gameScore.lastTapped = zombieObject.zombieType
+		
+		infoLayer.updateScore(newScore: gameScore.gameScore)
+		infoLayer.updateMulti(zombieImage: zombieObject.zombieIcon)
 	
 		despawnZombie(zombieID: zombieView.tag)
 	

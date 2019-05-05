@@ -12,6 +12,9 @@
 		CB539C0C227C23E700091078 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB539C0A227C23E700091078 /* LaunchScreen.storyboard */; };
 		CB539C15227C241C00091078 /* ZombieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB539C14227C241C00091078 /* ZombieModel.swift */; };
 		CB539C17227C280900091078 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB539C16227C280900091078 /* GameController.swift */; };
+		CB551CA4227D745900AC1A69 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA2227D745900AC1A69 /* InfoView.swift */; };
+		CB551CA5227D745900AC1A69 /* NightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA3227D745900AC1A69 /* NightView.swift */; };
+		CB551CA7227D74F400AC1A69 /* ScoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA6227D74F400AC1A69 /* ScoreModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		CB539C0D227C23E700091078 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB539C14227C241C00091078 /* ZombieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZombieModel.swift; sourceTree = "<group>"; };
 		CB539C16227C280900091078 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
+		CB551CA2227D745900AC1A69 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		CB551CA3227D745900AC1A69 /* NightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NightView.swift; sourceTree = "<group>"; };
+		CB551CA6227D74F400AC1A69 /* ScoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +68,7 @@
 		CB539C00227C23E200091078 /* Zombie Pop */ = {
 			isa = PBXGroup;
 			children = (
+				CB551CA1227D745900AC1A69 /* Views */,
 				CB243309227C63770072042B /* Controllers */,
 				CB539C13227C23F500091078 /* Models */,
 				CB539C01227C23E200091078 /* AppDelegate.swift */,
@@ -75,9 +82,19 @@
 		CB539C13227C23F500091078 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				CB551CA6227D74F400AC1A69 /* ScoreModel.swift */,
 				CB539C14227C241C00091078 /* ZombieModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		CB551CA1227D745900AC1A69 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CB551CA2227D745900AC1A69 /* InfoView.swift */,
+				CB551CA3227D745900AC1A69 /* NightView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +167,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB551CA4227D745900AC1A69 /* InfoView.swift in Sources */,
+				CB551CA5227D745900AC1A69 /* NightView.swift in Sources */,
 				CB539C17227C280900091078 /* GameController.swift in Sources */,
 				CB539C02227C23E200091078 /* AppDelegate.swift in Sources */,
 				CB539C15227C241C00091078 /* ZombieModel.swift in Sources */,
+				CB551CA7227D74F400AC1A69 /* ScoreModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
