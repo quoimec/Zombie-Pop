@@ -14,8 +14,20 @@ class SliderView: UIView {
 	let settingsHeader = UILabel()
 	let settingsSlider = UISlider()
 	let settingsValue = UILabel()
+	let stringFormatter: String
 	
-	init(header: String, minimum: Float, maximum: Float) {
+	init(header: String, minimum: Float, maximum: Float, type: SettingsType) {
+		
+		switch type {
+		
+			case .Float:
+			stringFormatter = "%.02f"
+			
+			case .Int:
+			stringFormatter = "%.0f"
+		
+		}
+		
 		super.init(frame: CGRect.zero)
 	
 		settingsHeader.text = header
@@ -51,7 +63,7 @@ class SliderView: UIView {
 			// Settings Slider
 			NSLayoutConstraint(item: settingsSlider, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: settingsSlider, attribute: .top, relatedBy: .equal, toItem: settingsHeader, attribute: .bottom, multiplier: 1.0, constant: 4),
-			NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: settingsSlider, attribute: .trailing, multiplier: 1.0, constant: 50),
+			NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: settingsSlider, attribute: .trailing, multiplier: 1.0, constant: 80),
 			NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: settingsSlider, attribute: .bottom, multiplier: 1.0, constant: 0),
 			
 			// Settings Value
@@ -66,6 +78,10 @@ class SliderView: UIView {
 	
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	func updateValue(passedValue: Float) {
+		settingsValue.text = String(format: stringFormatter, passedValue)
 	}
 	
 }

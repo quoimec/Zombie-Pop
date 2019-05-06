@@ -18,6 +18,8 @@
 		CB551CA9227EAD2C00AC1A69 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */; };
 		CB551CAB227EAD6E00AC1A69 /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAA227EAD6E00AC1A69 /* SliderView.swift */; };
 		CB551CAD227EB8B200AC1A69 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAC227EB8B200AC1A69 /* NavigationController.swift */; };
+		CB551CAF227ED7A000AC1A69 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAE227ED7A000AC1A69 /* SettingsModel.swift */; };
+		CB551CB1227FA71500AC1A69 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CB0227FA71500AC1A69 /* SegmentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		CB551CAA227EAD6E00AC1A69 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		CB551CAC227EB8B200AC1A69 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		CB551CAE227ED7A000AC1A69 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
+		CB551CB0227FA71500AC1A69 /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 			children = (
 				CB551CA6227D74F400AC1A69 /* ScoreModel.swift */,
 				CB539C14227C241C00091078 /* ZombieModel.swift */,
+				CB551CAE227ED7A000AC1A69 /* SettingsModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -101,6 +106,7 @@
 			children = (
 				CB551CA2227D745900AC1A69 /* InfoView.swift */,
 				CB551CA3227D745900AC1A69 /* NightView.swift */,
+				CB551CB0227FA71500AC1A69 /* SegmentView.swift */,
 				CB551CAA227EAD6E00AC1A69 /* SliderView.swift */,
 			);
 			path = Views;
@@ -179,9 +185,11 @@
 				CB551CAB227EAD6E00AC1A69 /* SliderView.swift in Sources */,
 				CB551CA4227D745900AC1A69 /* InfoView.swift in Sources */,
 				CB551CA5227D745900AC1A69 /* NightView.swift in Sources */,
+				CB551CB1227FA71500AC1A69 /* SegmentView.swift in Sources */,
 				CB539C17227C280900091078 /* GameController.swift in Sources */,
 				CB551CAD227EB8B200AC1A69 /* NavigationController.swift in Sources */,
 				CB551CA9227EAD2C00AC1A69 /* SettingsController.swift in Sources */,
+				CB551CAF227ED7A000AC1A69 /* SettingsModel.swift in Sources */,
 				CB539C02227C23E200091078 /* AppDelegate.swift in Sources */,
 				CB539C15227C241C00091078 /* ZombieModel.swift in Sources */,
 				CB551CA7227D74F400AC1A69 /* ScoreModel.swift in Sources */,
