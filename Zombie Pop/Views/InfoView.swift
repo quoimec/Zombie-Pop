@@ -14,10 +14,15 @@ class InfoView: UIView {
 	let infoTimer = UILabel()
 	let infoScore = UILabel()
 	let infoMulti = UILabel()
+	let infoHigh = UILabel()
 	let multiIcon = UIImageView()
 	
-	init(gameTime: Int) {
+	init(gameTime: Int, highScore: String?) {
 		super.init(frame: CGRect.zero)
+		
+		if let safeScore = highScore {
+			infoHigh.text = safeScore
+		}
 		
 		updateTimer(newTime: gameTime)
 		updateScore(newScore: 0)
@@ -25,26 +30,32 @@ class InfoView: UIView {
 		infoTimer.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
 		infoScore.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
 		infoMulti.font = UIFont.systemFont(ofSize: 16, weight: .heavy)
+		infoHigh.font = UIFont.systemFont(ofSize: 12, weight: .heavy)
 		
 		infoTimer.alpha = 0.40
 		infoScore.alpha = 0.40
 		infoMulti.alpha = 0.40
+		infoHigh.alpha = 0.40
 		infoTimer.textColor = UIColor.white
 		infoScore.textColor = UIColor.white
 		infoMulti.textColor = UIColor.white
+		infoHigh.textColor = UIColor.white
 		infoTimer.textAlignment = .left
 		infoScore.textAlignment = .right
 		infoMulti.textAlignment = .right
+		infoHigh.textAlignment = .right
 		
 		infoTimer.translatesAutoresizingMaskIntoConstraints = false
 		infoScore.translatesAutoresizingMaskIntoConstraints = false
 		infoMulti.translatesAutoresizingMaskIntoConstraints = false
 		multiIcon.translatesAutoresizingMaskIntoConstraints = false
+		infoHigh.translatesAutoresizingMaskIntoConstraints = false
 		
 		self.addSubview(infoTimer)
 		self.addSubview(infoScore)
 		self.addSubview(infoMulti)
 		self.addSubview(multiIcon)
+		self.addSubview(infoHigh)
 		
 		self.addConstraints([
 		
@@ -63,11 +74,14 @@ class InfoView: UIView {
 			
 			// Multi Icon
 			NSLayoutConstraint(item: multiIcon, attribute: .top, relatedBy: .equal, toItem: infoMulti, attribute: .top, multiplier: 1.0, constant: 2),
-			NSLayoutConstraint(item: multiIcon, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: multiIcon, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 18),
-			NSLayoutConstraint(item: multiIcon, attribute: .width, relatedBy: .equal, toItem: multiIcon, attribute: .height, multiplier: 1.0, constant: 0)
+			NSLayoutConstraint(item: multiIcon, attribute: .width, relatedBy: .equal, toItem: multiIcon, attribute: .height, multiplier: 1.0, constant: 0),
 			
-		
+			// Info High
+			NSLayoutConstraint(item: infoHigh, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1.0, constant: 0),
+			NSLayoutConstraint(item: infoHigh, attribute: .top, relatedBy: .equal, toItem: multiIcon, attribute: .bottom, multiplier: 1.0, constant: 2),
+			NSLayoutConstraint(item: self, attribute: .bottom, relatedBy: .equal, toItem: infoHigh, attribute: .bottom, multiplier: 1.0, constant: 0)
+			
 		])
 		
 	}

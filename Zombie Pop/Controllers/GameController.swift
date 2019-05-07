@@ -38,9 +38,33 @@ class GameController: UIViewController {
 	
 		gameSettings = passedSettings
 		gameSeconds = passedSettings.gameTime
-		infoLayer = InfoView(gameTime: passedSettings.gameTime)
 		
+		var highscoreString: String? = nil
+		
+		if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+		
+			let managedContext = appDelegate.persistentContainer.viewContext
+			let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Score")
+			fetchRequest.fetchLimit = 1
+			fetchRequest.sortDescriptors = [NSSortDescriptor(key: "playerScore", ascending: false)]
+		
+			var fetchResponse = Array<NSManagedObject>()
+			
+			do {
+				fetchResponse = try managedContext.fetch(fetchRequest)
+			} catch let error as NSError {
+				print("Could not fetch. \(error), \(error.userInfo)")
+			}
+			
+			if fetchResponse.count > 0, let currentHighscore = fetchResponse[0].value(forKey: "playerScore") as? Int {
+				highscoreString = "HIGH: \(currentHighscore)"
+			}
+		
+		}
+		
+		infoLayer = InfoView(gameTime: passedSettings.gameTime, highScore: highscoreString)
 		super.init(nibName: nil, bundle: nil)
+	
 	}
 	
 	override func viewDidLoad() {
@@ -127,9 +151,23 @@ extension GameController {
 		/*	Spawn Count
 			- A function for detirmining the number of zombies to spawn in a given game tick
 			- See graph of scaling function here: https://www.desmos.com/calculator/zsc9eu2aws
+		
+			Returns: An integer representing the number of zombies to spawn
 		*/
 	
 		return Int(pow(Double.random(in: 0 ... 100), 2.0) * 0.0004 + Double(gameSettings.spawnRate))
+	}
+	
+	func despawnCount() -> Int {
+	
+		/*	Despawn Count
+			- A function for detirmining the number of zombies to despawn in a given game tick
+		
+			Returns: An integer representing the number of zombies to despawn
+		*/
+	
+		return Int(pow(Double.random(in: 0 ... 100) + Double(gameSettings.despawnRate), 2.0) * 0.0002)
+	
 	}
 
 	func spawnLocation(zombieObject: Zombie, zombieBorder: Int, edgeInset: Int) -> Int? {
@@ -235,10 +273,21 @@ extension GameController {
 	}
 
 	@objc func gameLoop() {
+		
+		let tickDespawns = despawnCount()
+		let tickSpawns = spawnCount()
+		
+		for _ in 0 ..< tickDespawns {
+		
+			if zombieArray.count == 0 { break }
+			
+			let despawnIndex = Int.random(in: 0 ..< zombieArray.count)
+			
+			despawnZombie(zombieID: zombieArray[despawnIndex].zombieID)
+			
+		}
 	
-		let newSpawns = spawnCount()
-	
-		for _ in 0 ..< newSpawns {
+		for _ in 0 ..< tickSpawns {
 			
 			if zombieArray.count >= gameSettings.zombieCount { break }
 			
