@@ -51,13 +51,10 @@ class InfoView: UIView {
 			// Info Timer
 			NSLayoutConstraint(item: infoTimer, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: infoTimer, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: infoTimer, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0),
 			
 			// Info Score
-			NSLayoutConstraint(item: infoScore, attribute: .leading, relatedBy: .equal, toItem: infoTimer, attribute: .trailing, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: infoScore, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1.0, constant: 0),
 			NSLayoutConstraint(item: self, attribute: .trailing, relatedBy: .equal, toItem: infoScore, attribute: .trailing, multiplier: 1.0, constant: 0),
-			NSLayoutConstraint(item: infoScore, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0),
 			
 			// Info Multi
 			NSLayoutConstraint(item: infoMulti, attribute: .leading, relatedBy: .equal, toItem: multiIcon, attribute: .trailing, multiplier: 1.0, constant: 6),
@@ -79,7 +76,18 @@ class InfoView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	func updateScore(newScore: Int) { infoScore.text = "\(newScore)" }
+	func updateScore(newScore: Int) {
+	
+		infoScore.text = "\(newScore)"
+		
+		if newScore > 0 {
+			infoScore.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+			UIView.animate(withDuration: 0.3, animations: {
+				self.infoScore.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+			})
+		}
+	
+	}
 
 	func updateTimer(newTime: Int) {
 	

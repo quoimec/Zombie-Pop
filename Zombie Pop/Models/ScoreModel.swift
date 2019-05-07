@@ -24,5 +24,5 @@ struct ScoreModel {
 		
 	}
 	var zombieHistory = Array<ZombieType>()
-
+	
 }

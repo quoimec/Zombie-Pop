@@ -20,6 +20,12 @@
 		CB551CAD227EB8B200AC1A69 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAC227EB8B200AC1A69 /* NavigationController.swift */; };
 		CB551CAF227ED7A000AC1A69 /* SettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CAE227ED7A000AC1A69 /* SettingsModel.swift */; };
 		CB551CB1227FA71500AC1A69 /* SegmentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CB0227FA71500AC1A69 /* SegmentView.swift */; };
+		CB551CB3227FB69F00AC1A69 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CB2227FB69F00AC1A69 /* HomeController.swift */; };
+		CB551CB5227FC8E200AC1A69 /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CB4227FC8E200AC1A69 /* ButtonView.swift */; };
+		CB551CB7227FE5E400AC1A69 /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CB6227FE5E400AC1A69 /* InputView.swift */; };
+		CB551CBF227FED4800AC1A69 /* Highscores.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CB551CBD227FED4800AC1A69 /* Highscores.xcdatamodeld */; };
+		CB551CE2227FF22F00AC1A69 /* ScoresController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CE1227FF22F00AC1A69 /* ScoresController.swift */; };
+		CB551CE4227FF79000AC1A69 /* ScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB551CE3227FF79000AC1A69 /* ScoreCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +44,12 @@
 		CB551CAC227EB8B200AC1A69 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		CB551CAE227ED7A000AC1A69 /* SettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModel.swift; sourceTree = "<group>"; };
 		CB551CB0227FA71500AC1A69 /* SegmentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentView.swift; sourceTree = "<group>"; };
+		CB551CB2227FB69F00AC1A69 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		CB551CB4227FC8E200AC1A69 /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		CB551CB6227FE5E400AC1A69 /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
+		CB551CBE227FED4800AC1A69 /* Highscores.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Highscores.xcdatamodel; sourceTree = "<group>"; };
+		CB551CE1227FF22F00AC1A69 /* ScoresController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresController.swift; sourceTree = "<group>"; };
+		CB551CE3227FF79000AC1A69 /* ScoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +69,8 @@
 				CB539C16227C280900091078 /* GameController.swift */,
 				CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */,
 				CB551CAC227EB8B200AC1A69 /* NavigationController.swift */,
+				CB551CB2227FB69F00AC1A69 /* HomeController.swift */,
+				CB551CE1227FF22F00AC1A69 /* ScoresController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -80,9 +94,11 @@
 		CB539C00227C23E200091078 /* Zombie Pop */ = {
 			isa = PBXGroup;
 			children = (
+				CB551CE5227FF79400AC1A69 /* Cells */,
 				CB551CA1227D745900AC1A69 /* Views */,
 				CB243309227C63770072042B /* Controllers */,
 				CB539C13227C23F500091078 /* Models */,
+				CB551CBD227FED4800AC1A69 /* Highscores.xcdatamodeld */,
 				CB539C01227C23E200091078 /* AppDelegate.swift */,
 				CB539C08227C23E700091078 /* Assets.xcassets */,
 				CB539C0A227C23E700091078 /* LaunchScreen.storyboard */,
@@ -104,12 +120,22 @@
 		CB551CA1227D745900AC1A69 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				CB551CB4227FC8E200AC1A69 /* ButtonView.swift */,
 				CB551CA2227D745900AC1A69 /* InfoView.swift */,
 				CB551CA3227D745900AC1A69 /* NightView.swift */,
 				CB551CB0227FA71500AC1A69 /* SegmentView.swift */,
 				CB551CAA227EAD6E00AC1A69 /* SliderView.swift */,
+				CB551CB6227FE5E400AC1A69 /* InputView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		CB551CE5227FF79400AC1A69 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				CB551CE3227FF79000AC1A69 /* ScoreCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,15 +209,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB551CAB227EAD6E00AC1A69 /* SliderView.swift in Sources */,
+				CB551CB7227FE5E400AC1A69 /* InputView.swift in Sources */,
 				CB551CA4227D745900AC1A69 /* InfoView.swift in Sources */,
 				CB551CA5227D745900AC1A69 /* NightView.swift in Sources */,
+				CB551CE2227FF22F00AC1A69 /* ScoresController.swift in Sources */,
 				CB551CB1227FA71500AC1A69 /* SegmentView.swift in Sources */,
+				CB551CE4227FF79000AC1A69 /* ScoreCell.swift in Sources */,
 				CB539C17227C280900091078 /* GameController.swift in Sources */,
 				CB551CAD227EB8B200AC1A69 /* NavigationController.swift in Sources */,
 				CB551CA9227EAD2C00AC1A69 /* SettingsController.swift in Sources */,
 				CB551CAF227ED7A000AC1A69 /* SettingsModel.swift in Sources */,
+				CB551CB3227FB69F00AC1A69 /* HomeController.swift in Sources */,
+				CB551CB5227FC8E200AC1A69 /* ButtonView.swift in Sources */,
 				CB539C02227C23E200091078 /* AppDelegate.swift in Sources */,
 				CB539C15227C241C00091078 /* ZombieModel.swift in Sources */,
+				CB551CBF227FED4800AC1A69 /* Highscores.xcdatamodeld in Sources */,
 				CB551CA7227D74F400AC1A69 /* ScoreModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -384,6 +416,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CB551CBD227FED4800AC1A69 /* Highscores.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CB551CBE227FED4800AC1A69 /* Highscores.xcdatamodel */,
+			);
+			currentVersion = CB551CBE227FED4800AC1A69 /* Highscores.xcdatamodel */;
+			path = Highscores.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CB539BF6227C23E200091078 /* Project object */;
 }
