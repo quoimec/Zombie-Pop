@@ -13,6 +13,13 @@ import CoreData
 
 class GameController: UIViewController {
 	
+	/*	Game Controller
+	
+		- The main game routine of the application encapsulating the timers, scoring/settings models and the zombie controlling functions, all of which are individually documented below.
+		- The controller needs to be initialised with a SettingsModel struct. This controller is initialised inside the Home Controller when the user taps the Start button, if there is no existing SettingsModel saved in UserDefaults, the controller will provide a default Settings Model of medium difficulty.
+
+	*/
+	
 	var gameScore = ScoreModel()
 	var gameSettings: SettingsModel
 	
@@ -23,7 +30,7 @@ class GameController: UIViewController {
 	var introCountdown = 5
 	
 	var gameTimer = Timer()
-	var tickerTimer = Timer()
+	var gameTicker = Timer()
 	var countdownTimer = Timer()
 	
 	let zombieLayer = UIView()
@@ -41,6 +48,7 @@ class GameController: UIViewController {
 		
 		var highscoreString: String? = nil
 		
+		// If it exists, set the highest score in the Info View.
 		if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
 		
 			let managedContext = appDelegate.persistentContainer.viewContext
@@ -112,6 +120,13 @@ class GameController: UIViewController {
 		
 		countdownTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] timer in
 			
+			/*	Countdown Timer
+			
+				- The coundown timer is initialised at the end of VDL and controls the animated zombie hand counting down the game.
+				- Once the countdown has reached zero, it initialises both the GameTimer and the GameTick timers, thus starting the game.
+			
+			*/
+			
 			guard let safe = self else { return }
 			
 			if safe.introCountdown == 4 {
@@ -127,7 +142,7 @@ class GameController: UIViewController {
 				safe.countdownLayer.image = UIImage(named: "Zombie None")
 			} else if safe.introCountdown <= 0 {
 				safe.countdownLayer.removeFromSuperview()
-				safe.tickerTimer = Timer.scheduledTimer(timeInterval: Double(safe.gameSettings.gameTicks), target: safe, selector: #selector(safe.gameLoop), userInfo: nil, repeats: true)
+				safe.gameTicker = Timer.scheduledTimer(timeInterval: Double(safe.gameSettings.gameTicks), target: safe, selector: #selector(safe.gameTick), userInfo: nil, repeats: true)
 				safe.gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: safe, selector: #selector(safe.gameSecond), userInfo: nil, repeats: true)
 				safe.countdownTimer.invalidate()
 			}
@@ -149,10 +164,10 @@ extension GameController {
 	func spawnCount() -> Int {
 	
 		/*	Spawn Count
-			- A function for detirmining the number of zombies to spawn in a given game tick
+		
+			- A function for detirmining the number of zombies to spawn in a given game tick.
 			- See graph of scaling function here: https://www.desmos.com/calculator/zsc9eu2aws
 		
-			Returns: An integer representing the number of zombies to spawn
 		*/
 	
 		return Int(pow(Double.random(in: 0 ... 100), 2.0) * 0.0004 + Double(gameSettings.spawnRate))
@@ -161,9 +176,9 @@ extension GameController {
 	func despawnCount() -> Int {
 	
 		/*	Despawn Count
+		
 			- A function for detirmining the number of zombies to despawn in a given game tick
 		
-			Returns: An integer representing the number of zombies to despawn
 		*/
 	
 		return Int(pow(Double.random(in: 0 ... 100) + Double(gameSettings.despawnRate), 2.0) * 0.0002)
@@ -171,6 +186,17 @@ extension GameController {
 	}
 
 	func spawnLocation(zombieObject: Zombie, zombieBorder: Int, edgeInset: Int) -> Int? {
+		
+		/*	Spawn Location
+
+			- Spawn Location is a function that attempts to generate a valid X coordinate for the passed Zombie object, given it's type and speed.
+			- The function considers each existing zombie in the game, their type and speed and calculates how long it will take before that Zombie reaches the end of the game board.
+			- If the function is sure that a zombie will finish it's run before the new Zombie object it ignores it. If however, the function detirmines that the new Zombie would run over the existing Zombie, it blacklists the X coordinates around that Zombie so that the new Zombie cannot spawn in it's "lane".
+			- In this way, the game is able to adheer to requirement 7 of the assessment and will only consider spawning a Zombie in locations where it is legal and there is enough space to do so.
+			- If the Zombie cannot find a valid location to spawn, the function will return a value of nil. If it can, it will return the X coordinate for it's spawn.
+			- A repercussion of the moving Zombies and requirement 7 is that although the Zombies are created according to the necessary distribution in table 1, some Zombies cannot spawned, meaning the actual spawn rate differs from table 1.
+
+		*/
 		
 		let zombieRadius = CGFloat((zombieObject.zombieSize / 2) + zombieBorder)
 		let zombieInset = Int((Double(zombieObject.zombieSize) / 2.0).rounded(FloatingPointRoundingRule.up)) + edgeInset
@@ -191,8 +217,10 @@ extension GameController {
 		
 		if completeSet.count < Int(zombieRadius) * 2 { return nil }
 		
+		// Spawn Location selects a random X value from the remaining set.
 		guard let randomOrigin = completeSet.randomElement() else { return nil }
 		
+		// To ensure it has enough space to spawn, the function checks to make sure there is enough valid space on either side of the Zombie. If not, it returns nil. 
 		let randomSet: Set<Int> = Set(randomOrigin - Int(zombieRadius) ... randomOrigin + Int(zombieRadius))
 		
 		if randomSet.isSubset(of: completeSet) {
@@ -204,12 +232,19 @@ extension GameController {
 	}
 
 	func spawnZombie(zombieID: Int) -> Zombie? {
+	
+		/*	Spawn Zombie
+		
+			- Spawn Zombie is a function that may return a Zombie object when it is called. It will only return a Zombie object if Spawn Location (above) returns a valid X coordinate for the Zombie to spawn in. If Spawn Location returns nil, the Zombie will not be spawned and the struct is destroyed.
+			- Spawn Zombie needs to be passed an integer value which will serve as the unique ID for the new Zombie. Importantly, Spawn Zombie assosicates this value with both the Zombie object and it's view through the tag attribute. This is so that when the view is tapped, the assosicated Zombie object can be found by comparing the tag with all known Zombie object's IDs.
+			- If a valid X coordinate is allocated to the Zombie, Spawn Zombie creates the necessary view and animator functions and then updates the Zombie object to reference them with the mutating zombieWillAppear function. Spawn Zombie also attaches a tap gesture recogniser to the Zombie's view so that it will be killed if the user taps the zombie.
+			- After this has all been completed, Spawn Zombie adds the Zombie's view to the game view, starts the movement animation and returns the Zombie object, so that it can be stored in the Zombie Array.
+
+		*/
 		
 		var zombieObject = Zombie(passedID: zombieID, speedScale: Double(gameSettings.zombieSpeed))
 		
-		guard let zombieOrigin = spawnLocation(zombieObject: zombieObject, zombieBorder: 2, edgeInset: 10) else {
-			return nil
-		}
+		guard let zombieOrigin = spawnLocation(zombieObject: zombieObject, zombieBorder: 2, edgeInset: 10) else { return nil }
 	
 		let zombieView = UIImageView(frame: CGRect(x: zombieOrigin, y: 0, width: 50, height: 50))
 		zombieView.isUserInteractionEnabled = true
@@ -219,6 +254,7 @@ extension GameController {
 			zombieView.frame.origin.y = UIScreen.main.bounds.height
 		})
 		
+		// Zombie Animator Completion: If the animator completes, it means the zombie reached the end of the game board without being killed. In this case, the zombie will despawn iself while also subtracting it's score from the total score.
 		zombieAnimator.addCompletion({ [weak self] animatingPosition in
 			
 			guard let safe = self else { return }
@@ -242,6 +278,14 @@ extension GameController {
 	
 	func despawnZombie(zombieID: Int) {
 	
+		/* Despawn Zombie
+	
+			- This function serves to unwind all of the operations that Spawn Zombie starts up and allows the Zombie object to be deallocated from memory. It does this by stopping any running animations and disabling user interation. Then it animates the zombie out of the scene and finally removes both the Zombie object and the Zombie's view from the Game Controller.
+			- Despawn Zombie needs to be passed an ID value for the Zombie that is about to be despawned.\
+			- Despawn Zombie does not contain any scoring funcionality as this is encapsulated inside the Kill Zombie function, which then calls Despawn Zombie.
+
+		*/
+	
 		guard let zombieIndex = zombieArray.firstIndex(where: { $0.zombieID == zombieID }) else { return }
 		
 		zombieArray[zombieIndex].zombieAnimator?.stopAnimation(true)
@@ -251,6 +295,7 @@ extension GameController {
 
 		self.zombieArray.remove(at: zombieIndex)
 
+		// Small animation for the disapearing Zombie.
 		UIView.animate(withDuration: 0.3, animations: {
 			viewReference?.alpha = 0.0
 			viewReference?.transform = CGAffineTransform.init(scaleX: 0.9, y: 0.9)
@@ -262,6 +307,13 @@ extension GameController {
 
 	func bounceHand() {
 	
+		/*	Bounce Hand
+	
+			- This simple function is used to animate the bouncing of the coundown hand at the begining of the game.
+			- It scales the hand up and back to it's original location to give the impression of movement.
+
+		*/
+	
 		UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
 			self.countdownLayer.transform = CGAffineTransform.init(scaleX: 1.1, y: 1.1)
 		}, completion: nil)
@@ -272,7 +324,15 @@ extension GameController {
 		
 	}
 
-	@objc func gameLoop() {
+	@objc func gameTick() {
+	
+		/*	Game Loop
+		
+			- The Game Loop function is associated with the Game Ticker timer.
+			- Because the frequency of game ticks is a variable that the user is able to control in the game settings, Game Tick has been decoupled from the Game Time timer which always conunts down in seconds.
+			- In each Game Tick, the function decides how many Zombies it will both spawn and despawn for that tick. It then goes through and executes those despawn/spawn actions.
+
+		*/
 		
 		let tickDespawns = despawnCount()
 		let tickSpawns = spawnCount()
@@ -304,12 +364,19 @@ extension GameController {
 	
 	@objc func gameSecond() {
 	
+		/*	Game Second
+		
+			- Game Second is the primary game timer and as mentioned above, is decoupled from the spawning of Zombies. It's sole purpose is to fire each second and update the countdown view.
+			- Once the second count reaches 0, the Game Second function invalidates both itself and the Game Ticker timer and despawns all of the onscreen Zombies. It then presents an input to the user so that they can enter their name into the Scores record.
+
+		*/
+	
 		gameSeconds -= 1
 		infoLayer.updateTimer(newTime: self.gameSeconds)
 		
 		if gameSeconds <= 0 {
 		
-			tickerTimer.invalidate()
+			gameTicker.invalidate()
 			gameTimer.invalidate()
 		
 			for eachZombie in zombieArray {
@@ -340,6 +407,13 @@ extension GameController {
 	
 	@objc func killZombie(sender: UIGestureRecognizer) {
 	
+		/*	Kill Zombie
+
+			- Kill Zombie is the function that is called when a user taps on a Zombie view. It uses the view's tag attribute (which is a unique ID set when the Zombie was spawned) to find it's associaed Zombie object.
+			- Once it has found the right object, it appends the correct score to the total, adjusts the multiplier and then despawns the Zombie.
+
+		*/
+	
 		guard let zombieView = sender.view else { return }
 	
 		guard let zombieObject = zombieArray.first(where: { $0.zombieID == zombieView.tag }) else { return }
@@ -364,10 +438,31 @@ extension GameController {
 extension GameController: UITextFieldDelegate {
 
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+	
+		/* Text Field
+
+			- This function controlls the text field where the user inputs their name at the end of a game run.
+			- If the user has not entered any text, the function will pulse the text input area to indicate to the user that they must input text.
+			- If there is valid text in the field, it checks against the Core Data storage to see if that name already exists. If it does, the program checks to see if the new score is higher than the old score for that user. If it is, it overwrites the score. If not it does nothing. This is in accordance to requirement 10 where the system only keeps the players highest scores. If there is no existing score with the given name, the system creates a new entity and stores in the database.
+			- The before the function returns, it pushes an instance of Scores Controller into the navigation stack, highlighting the users highest score in red.
+
+		*/
 
 		guard let unwrappedText = textField.text else { return false }
 
-		if unwrappedText == "" { return false }
+		if unwrappedText == "" {
+		
+			UIView.animate(withDuration: 0.1, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
+				self.nameInput.transform = CGAffineTransform.init(scaleX: 1.1, y: 1.1)
+			}, completion: nil)
+		
+			UIView.animate(withDuration: 0.3, delay: 0.1, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
+				self.nameInput.transform = CGAffineTransform.init(scaleX: 1.0, y: 1.0)
+			}, completion: nil)
+			
+			return false
+			
+		}
 		
 		guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return false }
 		

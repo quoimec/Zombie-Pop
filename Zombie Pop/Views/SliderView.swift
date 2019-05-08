@@ -11,6 +11,14 @@ import UIKit
 
 class SliderView: UIView {
 
+	/*	Slider View
+
+		- Describes a standardised view of the slider controls used on the Settings Controller.
+		- Needs to be initialised with a minimum and maximum value for the slider as well as a custom Settings Type attribute. Because sliders are continuous (Floats) and some settings are discrete (Integers), this is used to correctly format the value displayed of each slider.
+		- Contains a standardised update function that uses this formatting string to update the Settings Value label.
+
+	*/
+
 	let settingsHeader = UILabel()
 	let settingsSlider = UISlider()
 	let settingsValue = UILabel()

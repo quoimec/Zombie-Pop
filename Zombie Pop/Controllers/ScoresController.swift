@@ -11,6 +11,15 @@ import UIKit
 import CoreData
 
 class ScoresController: UIViewController {
+
+	/*	Scores Controller
+
+		- A simple controller containing a table view displaying the top score for each player.
+		- Scores Controller may be initialised with a players name, in which case it will highlight that players score in red. This is specifically used after the player has completed a game and entered their name and the scores controller is automatically opened. This clearly shows the player where they stand on the leaderboard.
+		- Scores controller retrieves it's list of players from Core Data.
+		- Because Scores Controller is can be pushed on top of a Game Controller instance, it's done button will always pop back to the root Home Controller.
+
+	*/
 	
 	let focusPlayer: String
 	let scoresHeader = UILabel()

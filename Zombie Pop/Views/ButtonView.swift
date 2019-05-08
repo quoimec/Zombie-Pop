@@ -11,6 +11,12 @@ import UIKit
 
 class ButtonView: UIView {
 
+	/*	Button View
+
+		- Describes the view of the buttons used on the home screen.
+
+	*/
+
 	let buttonLabel = UILabel()
 	
 	init(buttonText: String) {

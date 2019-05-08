@@ -11,6 +11,15 @@ import UIKit
 
 class SettingsController: UIViewController {
 
+	/*	Settings Controller
+	
+		- Settings Controller contains all of the sliders for affecting the settings in the game.
+		- It is initialised with the users Settings Model. If such a model does not exist, a default Settings Model of Medium difficulty is created.
+		- The Settings Model is only used to set the sliders to their initial values, it is not stored by the controller.
+		- Once the user is satisfied with their settings, they elect to close the controller. This action triggers a new Settings Model to be created from the values of the sliders and segmented control. This struct is then stored in User Defaults to be loaded in the next time the user opens up the Game or Settings Controller. This approach does mean that if the user exits and terminates the app without closing the Setting controller their settings are not saved but I don't feel that this is a huge issue.
+
+	*/
+	
 	let settingsHeader = UILabel()
 	let settingsDone = UILabel()
 	let settingsScroll = UIScrollView()

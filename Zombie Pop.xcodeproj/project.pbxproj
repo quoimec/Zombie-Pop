@@ -67,10 +67,10 @@
 			isa = PBXGroup;
 			children = (
 				CB539C16227C280900091078 /* GameController.swift */,
-				CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */,
-				CB551CAC227EB8B200AC1A69 /* NavigationController.swift */,
 				CB551CB2227FB69F00AC1A69 /* HomeController.swift */,
 				CB551CE1227FF22F00AC1A69 /* ScoresController.swift */,
+				CB551CA8227EAD2C00AC1A69 /* SettingsController.swift */,
+				CB551CAC227EB8B200AC1A69 /* NavigationController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";

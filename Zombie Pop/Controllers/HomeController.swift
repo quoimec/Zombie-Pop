@@ -11,6 +11,13 @@ import UIKit
 
 class HomeController: UIViewController {
 
+	/*	Home Controller
+
+		- A very simple controller that contains 3 buttons; one to start a new game, one to open the scores controller and another to open the settings controller.
+		- The Home Controller is designed in exactly the same style as the Game Controller so that it looks like a seamless transition into the game when the user taps Start.
+
+	*/
+
 	let zombieHeader = UILabel()
 	let nightLayer = NightView()
 	let startButton = ButtonView(buttonText: "Start")
@@ -50,9 +57,9 @@ class HomeController: UIViewController {
 		self.view.addConstraints([
 		
 			// Zombie Header
-			NSLayoutConstraint(item: zombieHeader, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 20),
+			NSLayoutConstraint(item: zombieHeader, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 30),
 			NSLayoutConstraint(item: zombieHeader, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 50),
-			NSLayoutConstraint(item: self.view!, attribute: .trailing, relatedBy: .equal, toItem: zombieHeader, attribute: .trailing, multiplier: 1.0, constant: 20),
+			NSLayoutConstraint(item: self.view!, attribute: .trailing, relatedBy: .equal, toItem: zombieHeader, attribute: .trailing, multiplier: 1.0, constant: 30),
 		
 			// Night Layer
 			NSLayoutConstraint(item: nightLayer, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1.0, constant: 0),

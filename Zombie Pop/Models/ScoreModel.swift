@@ -10,6 +10,12 @@ import Foundation
 
 struct ScoreModel {
 
+	/*	Score Model
+	
+		- The struct used to store the users score and the history of tapped zombies
+	
+	*/
+
 	var gameScore = 0
 	var lastTapped: ZombieType? {
 		

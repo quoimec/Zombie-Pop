@@ -11,6 +11,13 @@ import UIKit
 
 class InfoView: UIView {
 
+	/*	Info View
+
+		- Describes the view of the highscore, time, current score and multiplier in the Game Controller.
+		- Includes built in functions to update the values scored in these views which includes some small animation features.
+	
+	*/
+
 	let infoTimer = UILabel()
 	let infoScore = UILabel()
 	let infoMulti = UILabel()

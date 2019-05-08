@@ -9,12 +9,29 @@
 import Foundation
 import UIKit
 
-enum ZombieType: Int {
+enum ZombieType {
+	
+	/*	Zombie Type
+	
+		- An enum of the five different types of zombies
+
+	*/
+	
 	case Red, Pink, Green, Blue, Black
 }
 
 struct Zombie {
+
+	/*	Zombie
 	
+		- The struct containing all of the data for a single onscreen zombie
+		- Each zombie object is randomly assigned a type based on the zombieDistribution below
+		- Each type has a different icon, speed and score attribute
+		- Because these values are initialised inside of the zombie and the coordinates of the zombie are unknown, it is not guarenteed that the zombie will be placed on the screen. This is due to functionality requirement 7. where a bubble (zombie) cannot overlap another bubble (zombie). To meet this requirement, it is necessary to check the proposed zombie against the existing zombies and their speed to detirmine if the zombie can be placed.
+		- If the zombie can be placed, it is necessary to call the zombieWillAppear function (below) to update the zombie object with references to the animator and view objects associated with this zombie.
+
+	*/
+
 	let zombieID: Int
 	let zombieType: ZombieType
 	let zombieIcon: String
@@ -28,9 +45,10 @@ struct Zombie {
 
 	init(passedID: Int, speedScale: Double) {
 	
-		let zombieDistribution = [0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4]
+		// Zombies are randomly initialised based on this distribution, which was made according to assessment spec
+		let zombieDistribution: Array<ZombieType> = [.Red, .Red, .Red, .Red, .Red, .Red, .Red, .Red, .Pink, .Pink, .Pink, .Pink, .Pink, .Pink, .Green, .Green, .Green, .Blue, .Blue, .Black]
 		
-		self.zombieType = ZombieType.init(rawValue: zombieDistribution[Int.random(in: 0 ..< zombieDistribution.count)])!
+		self.zombieType = zombieDistribution[Int.random(in: 0 ..< zombieDistribution.count)]
 		self.zombieID = passedID
 		
 		
@@ -69,15 +87,16 @@ struct Zombie {
 	
 	mutating func zombieWillAppear(passedView: UIImageView, passedAnimator: UIViewPropertyAnimator) {
 	
+		/*	zombieWillAppear
+		
+			- As above, zombieWillAppear needs to be called after the Zombie object has been initialised to update it with the references to the class
+
+		*/
+	
 		self.zombieView = passedView
 		self.zombieAnimator = passedAnimator
 		self.zombieView?.image = UIImage(named: self.zombieIcon)
 		
 	}
-
-	
-//	func timeRemaining() {
-//		return zombieAnimator?.fractionComplete
-//	}
 
 }

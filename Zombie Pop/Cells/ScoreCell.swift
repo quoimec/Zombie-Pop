@@ -11,6 +11,12 @@ import UIKit
 
 class ScoreCell: UITableViewCell {
 
+	/*	Score Cell
+
+		- Describes the standardised cell used to display a players score in the Scores Controller.
+
+	*/
+
 	let playerName = UILabel()
 	let playerScore = UILabel()
 	

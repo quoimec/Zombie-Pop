@@ -11,6 +11,13 @@ import UIKit
 
 class InputView: UIView {
 
+	/*	Input View
+
+		- Describes the text input view presented at the end of the game for the users name input.
+		- The delegate methods for this view can be found inside the Game Controller.
+
+	*/
+
 	let nameLabel = UILabel()
 	let nameView = UIView()
 	let nameInput = UITextField()

@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 		
+		// Initialise the Root Controller programatically rather than through the Storyboard file.
 		let rootController = NavigationController(rootViewController: HomeController())
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.rootViewController = rootController

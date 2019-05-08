@@ -11,6 +11,12 @@ import UIKit
 
 class SegmentView: UIView {
 
+	/*	Segment View
+
+		- Describes the view of the segmented control used on the Settings Controller.
+
+	*/
+
 	let settingsHeader = UILabel()
 	let settingsSegment = UISegmentedControl(items: ["Easy", "Medium", "Hard"])
 	
